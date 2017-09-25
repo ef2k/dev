@@ -1,0 +1,15 @@
+# devfile
+#
+# Usage e.g:
+#
+# watch: . # watches the current working directory
+# tasks:
+#   - cmd: GOOS=windows GOARCH=386 go build . -o winbin
+#     title: "Build for windows 7."
+#   - cmd: scp user@host/winbin:~/Desktop
+#     title: "Upload the bin to the windows server."
+
+watch: .
+tasks:
+  - cmd: go install ./cmd/dev
+    title: "Install the dev cli utility."
