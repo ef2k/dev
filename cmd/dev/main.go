@@ -14,11 +14,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cfg := &dev.Config{
-		Path: wd,
-	}
-
-	if err := dev.Run(cfg); err != nil {
+	if err := dev.Run(wd); err != nil {
 		fmt.Fprintf(os.Stderr, "%s", err)
 	}
 }

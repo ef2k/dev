@@ -1,23 +1,12 @@
 package dev
 
 import (
-	"fmt"
 	"log"
-	"time"
 )
 
-type Config struct {
-	Path string
-}
-
-func timeNow() string {
-	t := time.Now()
-	return fmt.Sprintf("%d:%d:%d", t.Hour(), t.Minute(), t.Second())
-}
-
-func Run(c *Config) error {
+func Run(wd string) error {
 	// Read the devfile
-	devfile, err := ReadConfig(c.Path)
+	devfile, err := ReadConfig(wd)
 	if err != nil {
 		return err
 	}
@@ -29,6 +18,7 @@ func Run(c *Config) error {
 	}
 
 	// Run the very first build
+	printHeaderTime()
 	if err := build(devfile.Tasks); err != nil {
 		return err
 	}
@@ -38,7 +28,7 @@ func Run(c *Config) error {
 		return nil
 	}
 
-	// Watch  for changes.
+	// Otherwise, watch  for changes.
 	changed := make(chan struct{}, 1)
 	errored := make(chan error, 1)
 	closed := make(chan struct{}, 1)
@@ -47,7 +37,7 @@ func Run(c *Config) error {
 	for {
 		select {
 		case <-changed:
-			fmt.Printf("---\n%s\n", timeNow())
+			printHeaderTime()
 			build(devfile.Tasks)
 		case err := <-errored:
 			log.Print(err)

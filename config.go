@@ -8,7 +8,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-const devfile = "devfile"
+const devfile = "dev.yaml"
 
 // Devfile holds the unmarshaled yaml content of a devfile
 type Devfile struct {
