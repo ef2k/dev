@@ -11,5 +11,8 @@
 
 watch: .
 tasks:
-  - cmd: go install ./cmd/dev
-    title: "Install the dev cli utility."
+  - title: "Install the dev cli utility"
+    cmd: go install ./cmd/dev
+  
+  - title: "Test everything"
+    cmd: go test ./... -verbose 
