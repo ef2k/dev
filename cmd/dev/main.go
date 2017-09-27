@@ -14,7 +14,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := dev.Run(wd); err != nil {
+	devfile, err := dev.ReadConfig(wd)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := dev.Run(devfile); err != nil {
 		fmt.Fprintf(os.Stderr, "%s", err)
 	}
 }

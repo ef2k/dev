@@ -30,7 +30,8 @@ func runTask(t Task) error {
 	return command(name, args...)
 }
 
-func build(tasks []Task) error {
+func runTasks(tasks []Task) error {
+	printHeaderTime()
 	var err error
 	for _, t := range tasks {
 		fmt.Printf("%s %s\n      %s \n\n", "[run]", t.Title, t.Cmd)
