@@ -28,7 +28,7 @@ $ dev init     # creates dev.yaml
 #### Step 2 - Configure commands
 
 ```yaml
-# dev.yaml
+# dev.yaml - Examples
 
 watch: . # watch all files
 
@@ -60,7 +60,7 @@ bg-tasks:
 
 ```
 
-#### Step 3 - Run it
+#### Step 3 - Run `dev`
 
 ```sh
 $ dev
