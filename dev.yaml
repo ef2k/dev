@@ -1,4 +1,4 @@
-# dev.yaml 
+# dev.yaml
 #
 # Usage e.g:
 #
@@ -10,9 +10,11 @@
 #     title: "Upload the bin to the windows server."
 
 watch: .
+
 tasks:
-  - title: "Install the dev cli utility"
-    cmd: go install ./cmd/dev
-  
-  - title: "Test everything"
-    cmd: go test ./... -verbose 
+
+  - cmd: go install ./cmd/dev
+    title: Install the dev cli utility
+
+  - cmd: go test ./... -short
+    title: Test everything
