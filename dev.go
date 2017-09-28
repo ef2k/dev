@@ -2,6 +2,7 @@ package dev
 
 import (
 	"log"
+	"os"
 )
 
 // Run invokes the commands found in the given Devfile. If a watcher is defined,
@@ -16,13 +17,13 @@ func Run(devfile *Devfile) error {
 	devfile.Watch = validPath
 
 	// If no tasks were given, then we're done.
+	// Otherwise, run them atleast once.
 	if len(devfile.Tasks) <= 0 {
 		return nil
-	}
-
-	// Otherwise, run the given tasks.
-	if err := runTasks(devfile.Tasks); err != nil {
-		return err
+	} else {
+		if err := runTasks(devfile.Tasks); err != nil {
+			return err
+		}
 	}
 
 	// If no watcher is needed, then we're done.
@@ -38,6 +39,7 @@ func Run(devfile *Devfile) error {
 	for {
 		select {
 		case <-changed:
+			clearScreen(os.Stdout)
 			runTasks(devfile.Tasks)
 		case err := <-errored:
 			log.Print(err)
