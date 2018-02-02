@@ -1,9 +1,11 @@
 package dev
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/fatih/color"
@@ -35,8 +37,8 @@ func runTask(t Task) error {
 	stdoutb := stdout.Bytes()
 	stderrb := stderr.Bytes()
 
-	os.Stdout.Write(stdoutb)
-	os.Stderr.Write(stderrb)
+	os.Stdout.Write(highlight(stdoutb))
+	os.Stderr.Write(highlight(stderrb))
 
 	return err
 }
@@ -50,4 +52,33 @@ func runTasks(tasks []Task) error {
 		}
 	}
 	return err
+}
+
+func highlight(b []byte) []byte {
+	r := bufio.NewReader(bytes.NewReader(b))
+	var buf bytes.Buffer
+	for {
+		line, _, err := r.ReadLine()
+		if err != nil {
+			break
+		}
+		if bytes.Contains(line, []byte("FAIL")) ||
+			bytes.Contains(line, []byte("error")) ||
+			bytes.Contains(line, []byte(".go:")) {
+			red := color.RedString(string(line))
+			buf.Write(appendNewLine([]byte(red)))
+		} else {
+			buf.Write(appendNewLine(line))
+		}
+	}
+	return buf.Bytes()
+}
+
+func appendNewLine(b []byte) (newLined []byte) {
+	cr := []byte("\n")
+	if runtime.GOOS == "windows" {
+		cr = []byte("\r\n")
+	}
+	newLined = append(b, cr...)
+	return
 }
