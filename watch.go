@@ -10,7 +10,7 @@ import (
 // validatePath checks if the given path exists. Returns an expanded path
 // string from the given path or an error if the path doesn't exist.
 func validatePath(path string) (wd string, err error) {
-	if path == "." {
+	if path == "" || path == "." {
 		return os.Getwd()
 	}
 	if _, err = os.Stat(path); os.IsNotExist(err) {

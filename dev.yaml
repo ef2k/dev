@@ -9,10 +9,9 @@
 #   - cmd: scp user@host/winbin:~/Desktop
 #     title: "Upload the bin to the windows server."
 
-watch: .
+# watch: .
 
 tasks:
-
   - cmd: go install ./cmd/dev
     title: Install the dev cli utility
 
